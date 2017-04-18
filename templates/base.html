@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  {% block head %}
+  <title>COSI132a Plot Search</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% endblock %}
+</head>
+<body>
+<div class="container">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="row">
+    <h1><a href="/">Plot Search System</a></h1>
+    <form action="/results" name="search" method="post">
+      <input type="text" name="query" placeholder="Enter query here" required>
+      <input type="submit" value="Search">
+    </form>
+    </div>
+    <div id="message">{% block message %}{% endblock %}</div>
+    <div class="row"><hr>{% block results %}{% endblock %}</div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+</body>
+</html>

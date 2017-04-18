@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage[top=1in,left=1in,right=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+%fancy header
+	\pagestyle{fancy}
+	\lhead{\textsc{COSI} 132a}
+	\chead{\textbf{PlotSearch Project Description}}
+	\rhead{\today}
+	\lfoot{}
+	\cfoot{\thepage\ of \pageref{LastPage}}
+	\rfoot{}
+
+\begin{document}
+
+	\paragraph*{Project name: } \ \\
+	PlotSearch
+	\paragraph*{Team members: } \ \\
+	Anna Astori, Xinhao Wang
+	\paragraph*{Domain: } \ \\
+	Movies, Fictions
+	\paragraph*{Brief application description: } \ \\
+	An application to search for movies or fictions based on plot description. The user will be given a text box where the input can be sentences describing the scenes about what actually happened. Our system will return either movies or fictions that match such description. 
+	\paragraph*{Corpus sources: } \ \\
+	Corpus will combine movie and fiction together
+    \begin{itemize}
+    \item TMDB: http://www.themoviedb.org/documentation/api 
+	\item IMDB: http://www.imdb.com
+	\item OMDB: http://www.omdbapi.com
+	\item The movie spoiler: http://www.themoviespoiler.com
+	\item Gutenberg: https://www.gutenberg.org
+    \end{itemize}
+    \paragraph*{Functionality:} \ \\
+    Standard: 
+    \begin{itemize}
+    \item retrieve movie or fiction information matching the plot description received from the user.
+    \end{itemize}
+    differentiators:
+    \begin{itemize}
+    \item user can decide to search movie only or fiction only or both
+    \item ranking based on the level of matching (i.e. similarity between the description received from the user and the one stored in the database), or, 
+    \item ranking based on ratings (IMDB, Rotten Tomatoes, etc.), or
+    \item ranking based on release date, or other metadata fields. 
+    \item optional search based on locations, historical time and actors, directors for movie, authors for fictions
+    \end{itemize}
+\end{document}
