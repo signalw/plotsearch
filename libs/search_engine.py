@@ -21,4 +21,12 @@ class SearchEngine(object):
         s = Search(using=self.client, index=self.index,
             doc_type=self.doc_type).query(Q("match_all"))
         res = s.execute()
-        return res if res.success() else None
+        return res
+
+    def search_by_id(self, id):
+        """Retrieve a document by id.
+        """
+        s = Search(using=self.client, index=self.index,
+            doc_type=self.doc_type).query("term", _id=id)
+        res = s.execute()
+        return res[0] if res else None
