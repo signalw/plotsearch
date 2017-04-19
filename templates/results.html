@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block message %}
+  <span id="total">?10?</span> documents retrieved.
+{% endblock %} -->
+{% block results %}
+<div>
+  {% for hit in results %}
+    <h4><a href="/movie/{{ hit.imdbID }}" target="_blank">{{ hit.imdbID }}. {{ hit.Title }}</a></h4>
+    <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
+  {% endfor %}
+</div>
+{% endblock %}
