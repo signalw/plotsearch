@@ -5,6 +5,7 @@
 {% block results %}
 <div>
   {% for hit in results %}
+    <img class="poster" src={{ hit.Poster }} >
     <h4><a href="/movie/{{ hit.imdbID }}" target="_blank">{{ hit.imdbID }}. {{ hit.Title }}</a></h4>
     <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
   {% endfor %}
