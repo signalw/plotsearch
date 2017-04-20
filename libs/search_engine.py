@@ -15,11 +15,11 @@ class SearchEngine(object):
         self.index = index
         self.doc_type = doc_type
 
-    def search(self):
+    def search(self, query):
         """Search match_all for now.
         """
         s = Search(using=self.client, index=self.index,
-            doc_type=self.doc_type).query(Q("match_all"))
+            doc_type=self.doc_type).query(Q("match", Plot=query[0]))
         res = s.execute()
         return res
 

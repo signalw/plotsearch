@@ -2,13 +2,16 @@ body {
 	font-family: sans-serif;
 }
 
-input[type="text"] {
-  width: 400px;
-}
-
 form {
 	padding-bottom: 20px;
 	display: inline-block;
+	width: 100%;
+}
+
+textarea.form-control {
+	display: block;
+	margin: auto;
+	max-width: 100%;
 }
 
 a {
