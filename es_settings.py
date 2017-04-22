@@ -4,7 +4,7 @@ corpus into elasticsearch.
 Change constants accordingly to modify ES datatype.
 Make sure ES is running before executing.
 """
-import json
+import json, re, time
 from elasticsearch import Elasticsearch, helpers
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import Index, Mapping, Nested
@@ -12,34 +12,33 @@ from elasticsearch_dsl import Index, Mapping, Nested
 ##########
 # CONFIG #
 ##########
-JSON_FILE = "data/toy_corpus.json"
+JSON_FILE = "data/movie_corpus.json"
 INDEX = "plotsearch"
 TYPE = "movie"
 FIELDS = [
-    # may suppress cases
     ("Ratings", (("Source", "text"), ("Value", "text"))),
     ("Rated", "text"),
     ("Plot", "text"),
-    ("DVD", "text"), # can be date, need preprocessing "1 Jan 1999"
-    ("Writer", "text"), # can be list, need preprocessing "A, B, C"
+    ("DVD", "date"),
+    ("Writer", "text"),
     ("Production", "text"),
-    ("Actors", "text"), # can be list, need preprocessing "A, B, C"
+    ("Actors", "text"),
     ("Type", "text"),
-    ("imdbVotes", "text"), # can be integer, need preprocessing "10,123"
+    ("imdbVotes", "integer"),
     ("Website", "text"),
     ("Poster", "text"),
     ("Title", "text"),
     ("Director", "text"),
-    ("Released", "text"), # can be date, need preprocessing "1 Jan 1999"
+    ("Released", "date"),
     ("Awards", "text"),
-    ("Genre", "text"), # can be list, need preprocessing "A, B, C"
+    ("Genre", "text"),
     ("imdbRating", "float"),
     ('Language', 'text'),
-    ("Country", "text"), # can be list, need preprocessing "A, B, C"
-    ("BoxOffice", "text"), # can be float, need preprocessing "$3,562,379.00"
-    ("Runtime", "text"), # can be integer, need preprocessing "96 min"
+    ("Country", "text"),
+    ("BoxOffice", "text"),
+    ("Runtime", "integer"),
     ("imdbID", "text"),
-    ("Metascore", "text"), # can be integer, need handling "N/A"
+    ("Metascore", "integer"),
     ("Response", "text"),
     ("Year", "date")
 ]
@@ -74,8 +73,43 @@ index.open()
 #############
 # LOAD DATA #
 #############
+def normalize_date(string):
+    if not string or string == "N/A": return
+    t = time.strptime(string, "%d %b %Y")
+    return "-".join(["%d" % t.tm_year, "%02d" % t.tm_mon, "%02d" % t.tm_mday])
+
+def normalize_year(string):
+    if string: return string[:4]
+
+def normalize_imdbrating(string):
+    if string != "N/A": return string
+
+def normalize_strtlist(string):
+    return [i.strip() for i in string.split(",")]
+
+def normalize_digits(string):
+    if string and string != "N/A": return string.replace(",", "")
+
+def normalize_runtime(string):
+    if string and string != "N/A": return string.strip(" min")
+
+FIELDS_TO_NORMALIZE = [
+    (normalize_date, ["DVD", "Released"]),
+    (normalize_year, ["Year"]),
+    (normalize_imdbrating, ["imdbRating"]),
+    (normalize_strtlist, ["Writer", "Actors", "Genre", "Country", "Language"]),
+    (normalize_digits, ["imdbVotes", "Metascore"]),
+    (normalize_runtime, ["Runtime"]),
+]
+
 with open(JSON_FILE) as f:
     d = json.load(f)
+
+for k in d:
+    for normalize, fields in FIELDS_TO_NORMALIZE:
+        for field in fields:
+            d[k][field] = normalize(d[k].get(field))
+
 actions = [
     {
         "_index": INDEX,
