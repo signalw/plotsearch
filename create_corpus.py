@@ -1,3 +1,7 @@
+"""
+This script collects movie plots and its metadata
+from websites and save the corpus as a json file.
+"""
 from bs4 import BeautifulSoup
 import json, re, requests
 
@@ -20,6 +24,13 @@ for url, title in cands:
     soup = BeautifulSoup(r, "html.parser")
     paragraphs = soup.find_all("p")
     plot = '\n'.join([p.text for p in paragraphs])
+    plot = re.sub(r".*?\s*NOTE:.*\s*|" + \
+        r"\W*CUT TO THE CHASE\W*|" + \
+        r"\W*Brought to you by\W*|" + \
+        r"[\s\_]*You can send in your spoiler[\s\w\W]*|" + \
+        r"\t+",
+        "", plot
+    )
     try:
         meta = requests.get("http://www.omdbapi.com/?t=%s" % title).json()
         assert meta["Response"] == "True"
