@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block title %}{{ movie.Title }} - Plot Search{% endblock %}
 {% block body %}
-<ul>
-  <li>id: {{ movie.imdbID }}</li>
-  <li>title: {{ movie.Title }}</li>
-  <li>plot: {{ movie.Plot }}</li>
-</ul>
+<div class="container">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="row">
+    <h1>{{ movie.imdbID }}. {{ movie.Title }}</h1>
+    {{ movie.Plot }}
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
 {% endblock %}
