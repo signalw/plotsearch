@@ -1,4 +1,16 @@
 {% extends "base.html" %}
-{% block message %}
-10 documents in total
+{% block body %}
+<div class="container">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="row">
+    <h1 id="index-banner"><a href="/">Plot Search System</a></h1>
+    <form id="index-form" action="/results" name="search" method="post">
+      <textarea class="form-control" name="query" placeholder="Describe your movie..." required></textarea>
+      <input type="submit" value="Search">
+    </form>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
 {% endblock %}

@@ -1,13 +1,28 @@
 {% extends "base.html" %}
-{% block message %}
-  <span id="total">?10?</span> documents retrieved.
-{% endblock %} -->
-{% block results %}
-<div>
-  {% for hit in results %}
-    <img class="poster" src={{ hit.Poster }} >
-    <h4><a href="/movie/{{ hit.imdbID }}" target="_blank">{{ hit.imdbID }}. {{ hit.Title }}</a></h4>
-    <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
-  {% endfor %}
+{% block body %}
+<div class="container">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="row">
+    <h1 id="results-banner" ><a href="/">Plot Search System</a></h1>
+    <form id="results-form" action="/results" name="search" method="post">
+      <textarea class="form-control" name="query" placeholder="Describe your movie..." required></textarea>
+      <input type="submit" value="Search">
+    </form>
+    </div>
+    <div id="message"><span id="total">?10?</span> documents retrieved</div>
+    <div class="row"><hr>
+      {% block results %}
+      <div>
+        {% for hit in results %}
+          <img class="poster" src={{ hit.Poster }} >
+          <h4><a href="/movie/{{ hit.imdbID }}" target="_blank">{{ hit.imdbID }}. {{ hit.Title }}</a></h4>
+          <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
+        {% endfor %}
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
 </div>
 {% endblock %}
