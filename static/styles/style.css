@@ -3,7 +3,7 @@ body {
 	background-image: url("/static/images/background.jpg");
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	background-size: 102%;
+	background-size: 100%;
 }
 
 #index-banner {
