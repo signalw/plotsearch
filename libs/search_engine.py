@@ -15,14 +15,16 @@ class SearchEngine(object):
         self.index = index
         self.doc_type = doc_type
 
-    def search(self, query, rtmin, rtmax):
+    def search(self, form):
         """Search match_all for now.
         """
+        query = form.get("query")
+        rtmin, rtmax = form.get("rtmin"), form.get("rtmax")
         runtime = {}
-        if rtmin[0]: runtime["gte"] = int(rtmin[0])
-        if rtmax[0]: runtime["lte"] = int(rtmax[0])
+        if rtmin: runtime["gte"] = int(rtmin)
+        if rtmax: runtime["lte"] = int(rtmax)
         s = Search(using=self.client, index=self.index,
-            doc_type=self.doc_type).query(Q("match", Plot=query[0])) \
+            doc_type=self.doc_type).query(Q("match", Plot=query)) \
             .filter("range", Runtime=runtime)
         res = s.execute()
         return res
