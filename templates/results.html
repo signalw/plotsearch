@@ -8,15 +8,29 @@
     <h1 id="results-banner" ><a href="/">Plot Search System</a></h1>
     <form id="results-form" action="/results" name="search" method="post">
       <textarea class="form-control" name="query" placeholder="Describe your movie..." required>{{ form['query'] }}</textarea>
-      <label>Runtime: </label>
-      <input type="text" name="rtmin" placeholder="min" value={{ form['rtmin'] }}>-
-      <input type="text" name="rtmax" placeholder="max" value={{ form['rtmax'] }}>
+      <div id="filters">
+        <label>Runtime: </label>
+        <input type="text" name="rtmin" placeholder="min" value={{ form['rtmin'] }}>-
+        <input type="text" name="rtmax" placeholder="max" value={{ form['rtmax'] }}><br>
+
+        <!-- filters below not configured at backend yet-->
+        <label>Released: </label>
+        <input type="text" name="rlmin" placeholder="min" value={{ form['rlmin'] }}>-
+        <input type="text" name="rlmax" placeholder="max" value={{ form['rlmax'] }}><br>
+        <label>Language: </label>
+        <select class="" name="language">
+          <option>--- Any ---</option>
+          <option>English</option>
+          <option>French</option>
+        </select>
+        <!-- filters above not configured at backend yet-->
+
+      </div>
       <input type="submit" value="Search">
     </form>
     </div>
-    <div id="message"><span id="total">?10?</span> documents retrieved</div>
+    <div id="message"><span id="total">{{ results['hits']['total'] }}</span> documents retrieved</div>
     <div class="row"><hr>
-      {% block results %}
       <div>
         {% for hit in results %}
           <img class="poster" src={{ hit.Poster }} >
@@ -24,7 +38,6 @@
           <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
         {% endfor %}
       </div>
-      {% endblock %}
     </div>
   </div>
   <div class="col-sm-2"></div>
