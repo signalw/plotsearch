@@ -38,6 +38,12 @@ textarea.form-control {
 	resize: none;
 }
 
+input[type="submit"] {
+	display: block;
+	margin: auto;
+	width: 100px;
+}
+
 .poster {
 	float: left;
 	margin-right: 10px;
