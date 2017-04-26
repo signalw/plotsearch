@@ -7,10 +7,10 @@
     <div class="row">
     <h1 id="results-banner" ><a href="/">Plot Search System</a></h1>
     <form id="results-form" action="/results" name="search" method="post">
-      <textarea class="form-control" name="query" placeholder="Describe your movie..." required></textarea>
+      <textarea class="form-control" name="query" placeholder="Describe your movie..." required>{{ form['query'] }}</textarea>
       <label>Runtime: </label>
-      <input type="text" name="rtmin" placeholder="min">-
-      <input type="text" name="rtmax" placeholder="max">
+      <input type="text" name="rtmin" placeholder="min" value={{ form['rtmin'] }}>-
+      <input type="text" name="rtmax" placeholder="max" value={{ form['rtmax'] }}>
       <input type="submit" value="Search">
     </form>
     </div>

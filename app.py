@@ -10,7 +10,7 @@ def index():
 @app.route("/results", methods=["POST"])
 def results():
     res = se.search(request.form)
-    return render_template("results.html", results=res)
+    return render_template("results.html", form=request.form, results=res)
 
 @app.route("/movie/<id>")
 def movie(id):
