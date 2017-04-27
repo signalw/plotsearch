@@ -6,7 +6,7 @@
   <div class="col-sm-8">
     <div class="row">
     <h1 id="results-banner" ><a href="/">COSI 132a - Plot Search</a></h1>
-    <form id="results-form" action="/results" name="search" method="post">
+    <form id="results-form" action="/results/p.1" name="search" method="post">
       <textarea class="form-control" name="query" placeholder="Describe your movie..." required>{{ form['query'] }}</textarea>
       <div id="filters">
         <label>Runtime: </label>
@@ -37,6 +37,11 @@
           <h4><a href="/movie/{{ hit.imdbID }}" target="_blank">{{ hit.imdbID }}. {{ hit.Title }}</a></h4>
           <p class="post-meta">{{ hit.Plot[:100] }}...</p><hr>
         {% endfor %}
+      </div>
+      <div class="pagination">
+        <button type="submit" id="prev">Prev</button>
+        Page <span id="page">{{ page }}</span>
+        <button type="submit" id="next">Next</button>
       </div>
     </div>
   </div>

@@ -66,3 +66,26 @@ a:hover {
 	text-align: center;
 	color: gray;
 }
+
+.pagination {
+	display: block;
+	width: 180px;
+	margin: auto;
+	color: white;
+}
+
+button {
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	border: none;
+	overflow: hidden;
+	outline: none;
+	text-decoration: underline;
+}
+
+button:disabled,
+button[disabled]{
+	cursor: default;
+	color: #7c7c7c;
+	text-decoration: line-through;
+}

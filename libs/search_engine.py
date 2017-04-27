@@ -15,7 +15,7 @@ class SearchEngine(object):
         self.index = index
         self.doc_type = doc_type
 
-    def search(self, form):
+    def search(self, form, start, end):
         """Search match_all for now.
         """
         query = form.get("query")
@@ -26,6 +26,7 @@ class SearchEngine(object):
         s = Search(using=self.client, index=self.index,
             doc_type=self.doc_type).query(Q("match", Plot=query)) \
             .filter("range", Runtime=runtime)
+        s = s[start:end]
         res = s.execute()
         return res
 

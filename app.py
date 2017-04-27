@@ -2,15 +2,19 @@ from flask import *
 from libs import se
 
 app = Flask(__name__)
+PER_PAGE = 10
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route("/results", methods=["POST"])
-def results():
-    res = se.search(request.form)
-    return render_template("results.html", form=request.form, results=res)
+@app.route("/results/p.<page>", methods=["POST"])
+def results(page):
+    page = int(page)
+    res = se.search(request.form, (page-1)*PER_PAGE, page*PER_PAGE)
+    return render_template(
+        "results.html", page=page, form=request.form, results=res
+    )
 
 @app.route("/movie/<id>")
 def movie(id):
