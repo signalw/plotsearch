@@ -1,13 +1,22 @@
 """
-This script creates an index and a type, and loads
-corpus into elasticsearch.
+This script creates an index and a type, loads
+corpus into elasticsearch, and configures synonym
+file.
+
 Change constants accordingly to modify ES datatype.
 Make sure ES is running before executing.
+
+Since it copies the synonym file into the default
+config directory of elasticsearch, root access is
+required.
+
+Usage:
+    $ sudo <virtualenv_dir>/bin/python es_settings.py
 """
-import json, re, time
+import json, os, re, requests, shutil, time
 from elasticsearch import Elasticsearch, helpers
 from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import Index, Mapping, Nested
+from elasticsearch_dsl import Index, Mapping, Nested, analyzer
 
 ##########
 # CONFIG #
@@ -18,7 +27,7 @@ TYPE = "movie"
 FIELDS = [
     ("Ratings", (("Source", "text"), ("Value", "text"))),
     ("Rated", "text"),
-    ("Plot", "text"),
+    ("Plot", "text", {"analyzer": "synonym"}),
     ("DVD", "date"),
     ("Writer", "text"),
     ("Production", "text"),
@@ -42,6 +51,20 @@ FIELDS = [
     ("Response", "text"),
     ("Year", "date")
 ]
+# Copy synonym file into elasticsearch config directory
+r = requests.get("http://localhost:9200/_nodes/settings")
+def find_path(dic, key):
+    if key in dic: return dic[key]
+    for k, v in dic.items():
+        if isinstance(v,dict):
+            item = find_path(v, key)
+            if item: return item
+conf_path = find_path(r.json(), "conf")
+analysis_path = os.path.join(conf_path, "analysis")
+if os.path.exists(analysis_path):
+    shutil.rmtree(analysis_path)
+os.mkdir(analysis_path)
+shutil.copy("data/wn_s.pl", analysis_path)
 
 ###########
 # SETTING #
@@ -53,6 +76,21 @@ index.settings(
     number_of_shards=1,
     number_of_replicas=0,
 )
+index._analysis = {
+    "analyzer" : {
+        "synonym" : {
+            "tokenizer" : "whitespace",
+            "filter" : ["synonym"]
+        }
+    },
+    "filter" : {
+        "synonym" : {
+            "type" : "synonym",
+            "format" : "wordnet",
+            "synonyms_path": "analysis/wn_s.pl"
+        }
+    }
+}
 index.create()
 index.close()
 
@@ -65,6 +103,8 @@ for f in FIELDS:
         n = Nested()
         for nf in f[1]: n.field(*nf)
         m.field(f[0], n)
+    elif len(f) > 2:
+        m.field(*f[:2], **f[2])
     else:
         m.field(*f)
 m.save(INDEX)
