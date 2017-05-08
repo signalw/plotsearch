@@ -80,7 +80,7 @@ index._analysis = {
     "analyzer" : {
         "synonym" : {
             "tokenizer" : "whitespace",
-            "filter" : ["synonym"]
+            "filter" : ["standard", "stop", "lowercase", "porter_stem", "synonym"]
         }
     },
     "filter" : {
