@@ -30,7 +30,7 @@
     </form>
     </div>
     <div id="message"><span id="total">{{ results['hits']['total'] }}</span> documents retrieved</div>
-    <div class="row"><hr>
+    <div class="row results"><hr>
       <div>
         {% for hit in results %}
           <img class="poster" src={{ hit.Poster }} >

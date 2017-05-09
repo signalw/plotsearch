@@ -3,12 +3,20 @@
 {% block body %}
 <div class="container">
   <div class="col-sm-2"></div>
-  <div class="col-sm-8">
-    <div class="row">
-    <h1>{{ movie.imdbID }}. {{ movie.Title }}</h1>
-    {{ movie.Runtime }} min <br>
-    {{ movie.Plot }}
-    </div>
+  <div class="col-sm-8 results">
+    <h1 class="page-header">{{ movie.Title }}</h1>
+    <img class="poster-big" src="{{ movie.Poster }}">
+    <b>Director</b>: {{ ','.join(movie.Director) if movie.Director is not string else movie.Director }} <br>
+    <b>Actor/Actress</b>: {{ ','.join(movie.Actors) if movie.Actors is not string else movie.Actors }} <br>
+    <b>imdbRating</b>: {{ movie.imdbRating }} <br>
+    <b>Rated</b>: {{ movie.Rated }} <br>
+    <b>Language</b>: {{ ','.join(movie.Language) }} <br>
+    <b>Country</b>: {{ ','.join(movie.Country) }} <br>
+    <b>Runtime</b>: {{ movie.Runtime }} min <br>
+    <b>Awards</b>: {{ movie.Awards }} <br>
+    <p><span class="glyphicon glyphicon-time"></span> Released on {{ movie.Released }}</p>
+    <hr>
+    <p>{{ movie.Plot }}</p>
   </div>
   <div class="col-sm-2"></div>
 </div>
