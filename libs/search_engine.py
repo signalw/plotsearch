@@ -29,11 +29,16 @@ class SearchEngine(object):
         """
         query = str(form.get("query"))
         term_list = query.split(' ')
-        for t in term_list:
-            if not spellchecker.spell(t):
-                suggestions = spellchecker.suggest(t)
+        for i in xrange(len(term_list)):
+            if not spellchecker.spell(term_list[i]):
+                suggestions = spellchecker.suggest(term_list[i])
                 if suggestions:
-                    candidates = [(s, ws.UNIGRAMS.get(s, 0)) for s in suggestions]
+                    prev = ''
+                    if i == 0:
+                        prev = '<s>'
+                    else:
+                        prev = term_list[i-1]
+                    candidates = [(s, ws.BIGRAMS.get((prev+' '+s), 0)) for s in suggestions]
                     winner = max(candidates, key=itemgetter(1))
                     flash(winner[0])
                 else: flash("Oops! A mistake?..")
