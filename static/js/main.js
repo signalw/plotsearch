@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   var curr_page = parseInt($("#page").text());
 
   if (curr_page <= 1) {
@@ -19,5 +19,7 @@ $(document).ready(function() {
     $("#results-form").attr("action", "/results/p."+(curr_page+1));
     $("#results-form").submit();
   });
+
+  $("select option[value="+$("#lan-hid").text()+"]").prop("selected", "selected");
 
 });

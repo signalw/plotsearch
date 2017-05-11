@@ -35,6 +35,8 @@ class SearchEngine(object):
             doc_type=self.doc_type).query(Q("match_phrase",
             Plot={"query": ' '.join(keywords), "slop": 50})) \
             .filter("range", Runtime=runtime)
+        language = form.get("language")
+        if language: s = s.filter("match", Language=language)
         s = s[start:end]
         res = s.execute()
         return res

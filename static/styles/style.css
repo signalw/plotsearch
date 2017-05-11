@@ -83,6 +83,10 @@ a:hover {
 	color: white;
 }
 
+.panel-title {
+	text-align: center;
+}
+
 button {
 	background-color: Transparent;
 	background-repeat: no-repeat;

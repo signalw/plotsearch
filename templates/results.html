@@ -8,23 +8,112 @@
     <h1 id="results-banner" ><a href="/">COSI 132a - Plot Search</a></h1>
     <form id="results-form" action="/results/p.1" name="search" method="post">
       <textarea class="form-control" name="query" placeholder="Describe your movie..." required>{{ form['query'] }}</textarea>
-      <div id="filters">
-        <label>Runtime: </label>
-        <input type="text" name="rtmin" placeholder="min" value={{ form['rtmin'] }}>-
-        <input type="text" name="rtmax" placeholder="max" value={{ form['rtmax'] }}><br>
-
-        <!-- filters below not configured at backend yet-->
-        <label>Released: </label>
-        <input type="text" name="rlmin" placeholder="min" value={{ form['rlmin'] }}>-
-        <input type="text" name="rlmax" placeholder="max" value={{ form['rlmax'] }}><br>
-        <label>Language: </label>
-        <select class="" name="language">
-          <option>--- Any ---</option>
-          <option>English</option>
-          <option>French</option>
-        </select>
-        <!-- filters above not configured at backend yet-->
-
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#filters" aria-expanded="false" aria-controls="filters">
+                Advanced Filters
+              </a>
+            </h4>
+          </div>
+          <div id="filters" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+              <label>Runtime: </label>
+              <input type="text" name="rtmin" placeholder="min" value={{ form['rtmin'] }}>-
+              <input type="text" name="rtmax" placeholder="max" value={{ form['rtmax'] }}><br>
+              <label>Language: <p hidden id="lan-hid">{{ form["language"] }}</p></label>
+              <select name="language">
+                <option value="">--- Any ---</option>
+                <option value=”afrikaans“>Afrikaans</option>
+                <option value=”albanian“>Albanian</option>
+                <option value=”algonquin“>Algonquin</option>
+                <option value=”americansignlanguage“>American Sign Language</option>
+                <option value=”apachelanguages“>Apache languages</option>
+                <option value=”arabic“>Arabic</option>
+                <option value=”aramaic“>Aramaic</option>
+                <option value=”armenian“>Armenian</option>
+                <option value=”awadhi“>Awadhi</option>
+                <option value=”bengali“>Bengali</option>
+                <option value=”berberlanguages“>Berber languages</option>
+                <option value=”britishsignlanguage“>British Sign Language</option>
+                <option value=”bulgarian“>Bulgarian</option>
+                <option value=”burmese“>Burmese</option>
+                <option value=”cantonese“>Cantonese</option>
+                <option value=”chinese“>Chinese</option>
+                <option value=”croatian“>Croatian</option>
+                <option value=”czech“>Czech</option>
+                <option value=”danish“>Danish</option>
+                <option value=”dari“>Dari</option>
+                <option value=”dutch“>Dutch</option>
+                <option value="english">English</option>
+                <option value=”esperanto“>Esperanto</option>
+                <option value=”estonian“>Estonian</option>
+                <option value=”filipino“>Filipino</option>
+                <option value=”finnish“>Finnish</option>
+                <option value="french">French</option>
+                <option value=”georgian“>Georgian</option>
+                <option value="german">German</option>
+                <option value=”greek“>Greek</option>
+                <option value=”hawaiian“>Hawaiian</option>
+                <option value=”hebrew“>Hebrew</option>
+                <option value=”hindi“>Hindi</option>
+                <option value=”hungarian“>Hungarian</option>
+                <option value=”icelandic“>Icelandic</option>
+                <option value=”indonesian“>Indonesian</option>
+                <option value=”inuktitut“>Inuktitut</option>
+                <option value=”irish“>Irish</option>
+                <option value=”italian“>Italian</option>
+                <option value=”japanese“>Japanese</option>
+                <option value=”japanesesignlanguage“>Japanese Sign Language</option>
+                <option value=”klingon“>Klingon</option>
+                <option value=”korean“>Korean</option>
+                <option value=”lao“>Lao</option>
+                <option value=”latin“>Latin</option>
+                <option value=”lingala“>Lingala</option>
+                <option value=”luxembourgish“>Luxembourgish</option>
+                <option value=”malayalam“>Malayalam</option>
+                <option value=”mandarin“>Mandarin</option>
+                <option value=”maori“>Maori</option>
+                <option value=”mapudungun“>Mapudungun</option>
+                <option value=”maya“>Maya</option>
+                <option value=”mende“>Mende</option>
+                <option value=”mongolian“>Mongolian</option>
+                <option value=”norse“>Norse</option>
+                <option value=”nyanja“>Nyanja</option>
+                <option value=”panjabi“>Panjabi</option>
+                <option value=”persian“>Persian</option>
+                <option value=”polish“>Polish</option>
+                <option value=”portuguese“>Portuguese</option>
+                <option value=”pushto“>Pushto</option>
+                <option value=”quechua“>Quechua</option>
+                <option value=”romanian“>Romanian</option>
+                <option value=”russian“>Russian</option>
+                <option value=”scottishgaelic“>Scottish Gaelic</option>
+                <option value=”serbian“>Serbian</option>
+                <option value=”serbo-croatian“>Serbo-Croatian</option>
+                <option value=”sioux“>Sioux</option>
+                <option value=”slovak“>Slovak</option>
+                <option value=”southernsotho“>Southern Sotho</option>
+                <option value="spanish">Spanish</option>
+                <option value=”swahili“>Swahili</option>
+                <option value=”swedish“>Swedish</option>
+                <option value=”syriac“>Syriac</option>
+                <option value=”tagalog“>Tagalog</option>
+                <option value=”thai“>Thai</option>
+                <option value=”tibetan“>Tibetan</option>
+                <option value=”turkish“>Turkish</option>
+                <option value=”ukrainian“>Ukrainian</option>
+                <option value=”urdu“>Urdu</option>
+                <option value=”vietnamese“>Vietnamese</option>
+                <option value=”welsh“>Welsh</option>
+                <option value=”xhosa“>Xhosa</option>
+                <option value=”yiddish“>Yiddish</option>
+                <option value=”zulu“>Zulu</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
       <input type="submit" value="Search">
     </form>
