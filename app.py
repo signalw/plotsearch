@@ -22,4 +22,5 @@ def movie(id):
     return render_template("movie.html", movie=movie)
 
 if __name__=="__main__":
+    app.secret_key = 'random bytes :)'
     app.run(debug=True)

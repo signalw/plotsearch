@@ -5,6 +5,7 @@ import nltk
 import hunspell
 import wordsegment as ws
 from operator import itemgetter
+from flask import *
 
 spellchecker = hunspell.HunSpell('/usr/share/hunspell/en_US.dic',\
                                  '/usr/share/hunspell/en_US.aff')
