@@ -48,7 +48,7 @@ pip install -r requirements
 
 To create corpus from scratch:
 ```
-python create_corpus.y
+python create_corpus.py
 ```
 
 It will go to themoviespoiler.com and omdbapi.com, fetch and clean movie data, and save it to `data/movie_corpus.json`.
