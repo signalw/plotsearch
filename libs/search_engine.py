@@ -33,7 +33,7 @@ class SearchEngine(object):
             if not spellchecker.spell(t):
                 suggestions = spellchecker.suggest(t)
                 if suggestions:
-                    candidates = [(s, ws.UNIGRAMS[s]) for s in suggestions]
+                    candidates = [(s, ws.UNIGRAMS.get(s, 0)) for s in suggestions]
                     winner = max(candidates, key=itemgetter(1))
                     flash(winner[0])
                 else: flash("Oops! A mistake?..")
