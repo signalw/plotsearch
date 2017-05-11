@@ -2,6 +2,13 @@ from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Q
 import nltk
+import hunspell
+import wordsegment as ws
+from operator import itemgetter
+
+spellchecker = hunspell.HunSpell('/usr/share/hunspell/en_US.dic',\
+                                 '/usr/share/hunspell/en_US.aff')
+ws.load()
 
 class SearchEngine(object):
     """A class for searching movies in corpus with
@@ -19,7 +26,17 @@ class SearchEngine(object):
     def search(self, form, start, end):
         """Process query and search relevant movies.
         """
-        query = form.get("query")
+        query = str(form.get("query"))
+        term_list = query.split(' ')
+        for t in term_list:
+            if not spellchecker.spell(t):
+                suggestions = spellchecker.suggest(t)
+                if suggestions:
+                    candidates = [(s, ws.UNIGRAMS[s]) for s in suggestions]
+                    winner = max(candidates, key=itemgetter(1))
+                    flash(winner[0])
+                else: flash("Oops! A mistake?..")
+                return render_template('index.html')
         token_tags = nltk.pos_tag(nltk.word_tokenize(query))
         keywords = [token for token, tag in token_tags if \
             tag.startswith("NN") or \
