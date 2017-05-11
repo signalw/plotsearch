@@ -65,6 +65,7 @@ if os.path.exists(analysis_path):
     shutil.rmtree(analysis_path)
 os.mkdir(analysis_path)
 shutil.copy("data/wn_s.pl", analysis_path)
+shutil.copy("data/names.txt", analysis_path)
 
 ###########
 # SETTING #
@@ -77,17 +78,28 @@ index.settings(
     number_of_replicas=0,
 )
 index._analysis = {
-    "analyzer" : {
-        "synonym" : {
-            "tokenizer" : "whitespace",
-            "filter" : ["standard", "stop", "lowercase", "porter_stem", "synonym"]
+    "analyzer": {
+        "synonym": {
+            "tokenizer": "whitespace",
+            "filter": [
+                "standard",
+                "stop",
+                "lowercase",
+                "porter_stem",
+                "synonym_wn",
+                "synonym_prp"
+            ]
         }
     },
-    "filter" : {
-        "synonym" : {
-            "type" : "synonym",
-            "format" : "wordnet",
+    "filter": {
+        "synonym_wn": {
+            "type": "synonym",
+            "format": "wordnet",
             "synonyms_path": "analysis/wn_s.pl"
+        },
+        "synonym_prp": {
+            "type": "synonym",
+            "synonyms_path": "analysis/names.txt"
         }
     }
 }
