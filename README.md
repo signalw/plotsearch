@@ -60,5 +60,5 @@ sudo <virtualenv_dir>/bin/python es_settings.py
 
 Then the flask application can be kicked off by running:
 ```
-python vs_query.py
+python app.py
 ```
