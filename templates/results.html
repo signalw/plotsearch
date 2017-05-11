@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block title %}COSI 132a - Plot Search{% endblock %}
 {% block body %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<h1 id="results-banner" > Did you mean... ?</h1>
+{% for message in messages %}
+<h1 id="results-banner" > {{ message }}</h1>
+{% endfor %}
+{% else %}
 <div class="container">
   <div class="col-sm-2"></div>
   <div class="col-sm-8">
@@ -136,4 +143,6 @@
   </div>
   <div class="col-sm-2"></div>
 </div>
+{% endif %}
+{% endwith %}
 {% endblock %}
