@@ -43,7 +43,7 @@ An application to search for movies based on plot description. The user is provi
 
 To install dependencies:
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 To create corpus from scratch:
